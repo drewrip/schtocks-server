@@ -5,9 +5,10 @@ import(
 	"time"
 	"database/sql"
 	"log"
+	"net/http"
 	_ "github.com/mattn/go-sqlite3"
-	//"github.com/drewrip/schtocks-server/prices"
 	"github.com/drewrip/schtocks-server/stocks"
+	"github.com/gorilla/mux"
 )
 
 func check(err error){
@@ -20,6 +21,12 @@ type Server struct {
 	TickTime time.Duration
 	Ticker *time.Ticker
 	DB *sql.DB
+	Stocks []*stocks.Stock
+}
+
+type TimePricePair struct {
+	Time int64
+	Price float64
 }
 
 func (s *Server) NewStockTable(st *stocks.Stock) {
@@ -37,6 +44,60 @@ func (s *Server) NewStockTable(st *stocks.Stock) {
 	
 }
 
+func (s *Server) GetStockPrices(st *stocks.Stock) []TimePricePair {
+	getStockPricesSQL := fmt.Sprintf(`SELECT * FROM %s`, st.Ticker)
+
+	rows, err := s.DB.Query(getStockPricesSQL)
+	check(err)
+
+	pairs := []TimePricePair{}
+	
+	check(err)
+
+	var qTime int64
+	var qPrice float64
+	
+	for rows.Next() {
+		err = rows.Scan(&qTime, &qPrice)
+		check(err)
+		pairs = append(pairs, TimePricePair{
+			Time: qTime,
+			Price: qPrice,
+		})
+	}
+	
+	rows.Close()
+
+	return pairs
+}
+
+func (s *Server) GetStockPricesByTicker(tr string) []TimePricePair {
+	getStockPricesSQL := fmt.Sprintf(`SELECT * FROM %s`, tr)
+
+	rows, err := s.DB.Query(getStockPricesSQL)
+	check(err)
+
+	pairs := []TimePricePair{}
+	
+	check(err)
+
+	var qTime int64
+	var qPrice float64
+	
+	for rows.Next() {
+		err = rows.Scan(&qTime, &qPrice)
+		check(err)
+		pairs = append(pairs, TimePricePair{
+			Time: qTime,
+			Price: qPrice,
+		})
+	}
+	
+	rows.Close()
+
+	return pairs
+}
+
 func (s *Server) AddStockPrice(st *stocks.Stock) {
 	insertPriceSQL := fmt.Sprintf(`INSERT INTO %s (time, price) values (?, ?);`, st.Ticker)
 
@@ -47,6 +108,34 @@ func (s *Server) AddStockPrice(st *stocks.Stock) {
 	_, err = stmt.Exec(time.Now().UnixNano(), st.CurrentPrice)
 	check(err)
 	
+}
+
+func (s *Server) startStocks(){
+
+	fmt.Printf("[SERVER] Starting stock price generating loop\n")
+	s.Stocks = stocks.ParseFile("./sample.json")
+	for {
+		<-s.Ticker.C
+		for _, c := range s.Stocks {
+			c.CurrentPrice = c.Model.NextPrice()
+			s.AddStockPrice(c)
+		}
+	}
+}
+
+func (s *Server) startRequests(){
+	router := mux.NewRouter().StrictSlash(true)
+    router.HandleFunc("/getAllPrices", s.getAllPricesHandler)
+    router.HandleFunc("/getPrice", s.getPriceHandler)
+	fmt.Printf("[SERVER] Starting http server on :3432\n")
+    if err := http.ListenAndServe(":3432", router); err != nil {
+        log.Fatal(err)
+    }
+}
+
+func (s *Server) Start() {
+	go s.startRequests()
+	s.startStocks()
 }
 
 func (s *Server) CloseDB() {
