@@ -20,6 +20,12 @@ type Stock struct {
 	Model *prices.PriceModel
 }
 
+type StockInfo struct {
+	Name string `json:"name"`
+	Ticker string `json:"ticker"`
+	Desc string `json:"desc"`
+}
+
 type StockJSON struct {
 	Name string `json:"name"`
 	Ticker string `json:"ticker"`

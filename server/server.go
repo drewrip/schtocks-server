@@ -21,7 +21,7 @@ type Server struct {
 	TickTime time.Duration
 	Ticker *time.Ticker
 	DB *sql.DB
-	Stocks []*stocks.Stock
+	Stocks map[string]*stocks.Stock
 }
 
 type TimePricePair struct {
@@ -113,12 +113,18 @@ func (s *Server) AddStockPrice(st *stocks.Stock) {
 func (s *Server) startStocks(){
 
 	fmt.Printf("[SERVER] Starting stock price generating loop\n")
-	s.Stocks = stocks.ParseFile("./sample.json")
+	listOfStocks := stocks.ParseFile("./sample.json")
+	
+	for _, c := range listOfStocks {
+		s.Stocks[c.Ticker] = c
+		s.NewStockTable(c)
+	}
+	
 	for {
 		<-s.Ticker.C
-		for _, c := range s.Stocks {
-			c.CurrentPrice = c.Model.NextPrice()
-			s.AddStockPrice(c)
+		for _, v := range s.Stocks {
+			v.CurrentPrice = v.Model.NextPrice()
+			s.AddStockPrice(v)
 		}
 	}
 }
@@ -127,6 +133,8 @@ func (s *Server) startRequests(){
 	router := mux.NewRouter().StrictSlash(true)
     router.HandleFunc("/getAllPrices", s.getAllPricesHandler)
     router.HandleFunc("/getPrice", s.getPriceHandler)
+	router.HandleFunc("/getAllStockInfo", s.getAllStockInfoHandler)
+	router.HandleFunc("/getStockInfo", s.getStockInfoHandler)
 	fmt.Printf("[SERVER] Starting http server on :3432\n")
     if err := http.ListenAndServe(":3432", router); err != nil {
         log.Fatal(err)
@@ -150,5 +158,6 @@ func NewServer(ticktime time.Duration) *Server{
 		DB: database,
 		TickTime: ticktime,
 		Ticker: time.NewTicker(ticktime),
+		Stocks: make(map[string]*stocks.Stock),
 	}
 }
