@@ -8,19 +8,13 @@ import (
 type PriceModel struct {
 	startPrice float64
 	currentPrice float64
-
+	
 	volatility float64
 	driftFunc func(int64) float64
 
 	randGen *rand.Rand
 
 	tickNum int64
-}
-
-type Price struct {
-	Name string
-	Ticker string
-	Price float64
 }
 
 func NewPriceModel(sPrice float64, vol float64, df func(int64) float64) *PriceModel {
@@ -32,7 +26,7 @@ func NewPriceModel(sPrice float64, vol float64, df func(int64) float64) *PriceMo
 		volatility: vol,
 		driftFunc: df,
 		randGen: r,
-		startTime: currTime
+		tickNum: 0,
 	}
 }
 
@@ -41,18 +35,16 @@ func (pm *PriceModel) SetDriftFunc(df func(int64) float64){
 	pm.driftFunc = df
 }
 
-func (pm *PriceModel) NextPrice() Price {
+func (pm *PriceModel) NextPrice() float64 {
 	pm.tickNum++
 	min := pm.currentPrice - pm.volatility
-	max := pm.currentPrice - pm.volatility
+	max := pm.currentPrice + pm.volatility
 	rNum := min + pm.randGen.Float64()*(max-min)
-	return Price{
-		name: pm.name,
-		ticker: pm.ticker,
-		price: pm.driftFunc(pm.tickNum) + rNum
-	}
+	return pm.driftFunc(pm.tickNum) + rNum
 }
 
-
+func (pm *PriceModel) GetCurrentPrice() float64 {
+	return pm.currentPrice
+}
 
 

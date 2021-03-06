@@ -1,0 +1,18 @@
+[
+	{
+		"name": "Gruugle",
+		"ticker": "GRUU",
+		"desc": "Innovation at GRUU speed",
+		"startPrice": 323.03,
+		"vol": 0.25,
+		"driftType": "up"
+	},
+	{
+		"name": "Oopsalon",
+		"ticker": "OPSL",
+		"desc": "Packages right to your floor",
+		"startPrice": 22.35,
+		"vol": 0.5,
+		"driftType": "none"
+	}
+]
