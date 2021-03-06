@@ -9,15 +9,15 @@ import(
 )
 
 type Stock struct {
-	name string
-	ticker string
-	desc string
+	Name string
+	Ticker string
+	Desc string
 
-	currentPrice float64
-	ath float64
-	atl float64
+	CurrentPrice float64
+	Ath float64
+	Atl float64
 	
-	model *prices.PriceModel
+	Model *prices.PriceModel
 }
 
 type StockJSON struct {
@@ -32,13 +32,13 @@ type StockJSON struct {
 
 func NewStock(n string, t string, d string, sPrice float64, vol float64, df func(int64) float64) *Stock {
 	return &Stock{
-		name: n,
-		ticker: t,
-		desc: d,
-		currentPrice: sPrice,
-		ath: sPrice,
-		atl: sPrice,
-		model: prices.NewPriceModel(sPrice, vol, df),
+		Name: n,
+		Ticker: t,
+		Desc: d,
+		CurrentPrice: sPrice,
+		Ath: sPrice,
+		Atl: sPrice,
+		Model: prices.NewPriceModel(sPrice, vol, df),
 	}
 }
 
@@ -80,14 +80,14 @@ func ParseFile(path string) []*Stock {
 		}
 
 		stock := &Stock{
-			name: s.Name,
-			ticker: s.Ticker,
-			desc: s.Desc,
+			Name: s.Name,
+			Ticker: s.Ticker,
+			Desc: s.Desc,
 
-			currentPrice: s.StartPrice,
-			ath: s.StartPrice,
-			atl: s.StartPrice,
-			model: prices.NewPriceModel(s.StartPrice, s.Vol, drift),
+			CurrentPrice: s.StartPrice,
+			Ath: s.StartPrice,
+			Atl: s.StartPrice,
+			Model: prices.NewPriceModel(s.StartPrice, s.Vol, drift),
 		}
 		newStocks = append(newStocks, stock)
 	}
@@ -96,10 +96,10 @@ func ParseFile(path string) []*Stock {
 }
 
 func (s *Stock) GetATH() float64 {
-	return s.ath
+	return s.Ath
 }
 
 func (s *Stock) GetATL() float64 {
-	return s.atl
+	return s.Atl
 }
 
