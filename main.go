@@ -1,12 +1,14 @@
 package main
 
 import(
-	"fmt"
 	"github.com/drewrip/schtocks-server/stocks"
+	"github.com/drewrip/schtocks-server/server"
 )
 
 
 func main(){
-	s := stocks.ParseFile("stocks/sample.json")
-	fmt.Println(s)
+	comps := stocks.ParseFile("stocks/sample.json")
+	server := server.NewServer()
+
+	server.NewStockTable(comps[0])
 }

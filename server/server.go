@@ -1,13 +1,13 @@
 package server
 
 import(
-	"fmt"
+	//"fmt"
 	"time"
 	"database/sql"
 	"log"
 	_ "github.com/mattn/go-sqlite3"
-	//"github.com/drewrip/schtocks/prices"
-	"github.com/drewrip/schtocks/stocks"
+	//"github.com/drewrip/schtocks-server/prices"
+	"github.com/drewrip/schtocks-server/stocks"
 )
 
 func check(err error){
@@ -18,10 +18,10 @@ func check(err error){
 
 type Server struct {
 	TickTime time.Duration
-	DB *sq.DB
+	DB *sql.DB
 }
 
-func (s *Server) NewStockTable(stock *stocks.Stock) {
+func (s *Server) NewStockTable(st *stocks.Stock) {
 	newStockTableSQL := `CREATE TABLE IF NOT EXISTS ? (
 		"time" INTEGER,
 		"price" REAL		
@@ -31,7 +31,7 @@ func (s *Server) NewStockTable(stock *stocks.Stock) {
 	stmt, err := s.DB.Prepare(newStockTableSQL)
 	check(err)
 
-	stmt.Exec(stock.Ticker)
+	stmt.Exec(st.Ticker)
 	
 }
 
@@ -40,7 +40,7 @@ func NewServer() *Server{
 	check(err)
 
 	return &Server{
-		DB: &database,
+		DB: database,
 		TickTime: time.Second,
 	}
 }
