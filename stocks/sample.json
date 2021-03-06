@@ -14,5 +14,22 @@
 		"startPrice": 22.35,
 		"vol": 0.5,
 		"driftType": "none"
+	},
+	{
+		"name": "Cincy.rr.com",
+		"ticker": "CINC",
+		"desc": "email provider (maybe)",
+		"startPrice": 5000.22,
+		"vol": 10.0,
+		"driftType": "down"
+	},
+	{
+		"name": "Ooples And Banoonoos",
+		"ticker": "OAND",
+		"desc": "APPLE devices I think",
+		"startPrice": 456.90,
+		"vol": 0.2,
+		"driftType": "up"
 	}
+
 ]

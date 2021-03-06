@@ -1,7 +1,7 @@
 package server
 
 import(
-	//"fmt"
+	"fmt"
 	"time"
 	"database/sql"
 	"log"
@@ -18,29 +18,48 @@ func check(err error){
 
 type Server struct {
 	TickTime time.Duration
+	Ticker *time.Ticker
 	DB *sql.DB
 }
 
 func (s *Server) NewStockTable(st *stocks.Stock) {
-	newStockTableSQL := `CREATE TABLE IF NOT EXISTS ? (
+	newStockTableSQL := fmt.Sprintf(`CREATE TABLE IF NOT EXISTS %s (
 		"time" INTEGER,
 		"price" REAL		
-	  );`
+	  );`, st.Ticker)
 
 
 	stmt, err := s.DB.Prepare(newStockTableSQL)
 	check(err)
 
-	stmt.Exec(st.Ticker)
+	_, err = stmt.Exec()
+	check(err)
 	
 }
 
-func NewServer() *Server{
-	database, err := sql.Open("sqlite3", "./schtocks.db")
+func (s *Server) AddStockPrice(st *stocks.Stock) {
+	insertPriceSQL := fmt.Sprintf(`INSERT INTO %s (time, price) values (?, ?);`, st.Ticker)
+
+
+	stmt, err := s.DB.Prepare(insertPriceSQL)
 	check(err)
 
+	_, err = stmt.Exec(time.Now().UnixNano(), st.CurrentPrice)
+	check(err)
+	
+}
+
+func (s *Server) CloseDB() {
+	s.DB.Close()
+}
+
+func NewServer(ticktime time.Duration) *Server{
+	database, err := sql.Open("sqlite3", "./schtocks.db")
+	check(err)
+	
 	return &Server{
 		DB: database,
-		TickTime: time.Second,
+		TickTime: ticktime,
+		Ticker: time.NewTicker(ticktime),
 	}
 }
