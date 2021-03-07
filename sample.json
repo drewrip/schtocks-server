@@ -5,7 +5,7 @@
 		"desc": "Innovation at GRUU speed",
 		"startPrice": 323.03,
 		"vol": 0.25,
-		"driftType": "up"
+		"driftType": "none"
 	},
 	{
 		"name": "Oopsalon",
@@ -21,7 +21,7 @@
 		"desc": "email provider (maybe)",
 		"startPrice": 5000.22,
 		"vol": 10.0,
-		"driftType": "down"
+		"driftType": "none"
 	},
 	{
 		"name": "Ooples And Banoonoos",
@@ -29,7 +29,7 @@
 		"desc": "APPLE devices I think",
 		"startPrice": 456.90,
 		"vol": 0.2,
-		"driftType": "up"
+		"driftType": "none"
 	},
 	{
 		"name": "MacroHard",
@@ -45,7 +45,7 @@
 		"desc": "Social Media Company",
 		"startPrice": 423.96,
 		"vol": 0.4,
-		"driftType": "down"
+		"driftType": "none"
 	},
 	{
 		"name": "Chirper",
@@ -53,7 +53,7 @@
 		"desc": "Social Media Company",
 		"startPrice": 456.90,
 		"vol": 0.2,
-		"driftType": "up"
+		"driftType": "none"
 	},
 	{
 		"name": "John and John",
@@ -69,7 +69,7 @@
 		"desc": "Streaming Service",
 		"startPrice": 70.82,
 		"vol": 0.6,
-		"driftType": "up"
+		"driftType": "none"
 	},
 	{
 		"name": "Vinny's Italian Pizzaria",
@@ -85,7 +85,7 @@
 		"desc": "Bakery",
 		"startPrice": 5.96,
 		"vol": 0.6,
-		"driftType": "up"
+		"driftType": "none"
 	},
 	{
 		"name": "Fredrick and Sons",
@@ -93,7 +93,7 @@
 		"desc": "Construction Company",
 		"startPrice": 3.23,
 		"vol": 0.4,
-		"driftType": "down"
+		"driftType": "none"
 	},
 	{
 		"name": "Ron's Burgers",
@@ -109,7 +109,7 @@
 		"desc": "Plumbing Company",
 		"startPrice": 14.67,
 		"vol": 0.5,
-		"driftType": "up"
+		"driftType": "none"
 	},
 	{
 		"name": "Lens Studios",
@@ -125,7 +125,7 @@
 		"desc": "Motor Company",
 		"startPrice": 34.92,
 		"vol": 0.3,
-		"driftType": "down"
+		"driftType": "none"
 	},
 	{
 		"name": "Futugari",
@@ -133,7 +133,7 @@
 		"desc": "Luxury Car Company",
 		"startPrice": 56.48,
 		"vol": 0.9,
-		"driftType": "down"
+		"driftType": "none"
 	},
 	{
 		"name": "Snips and Clips",
@@ -149,7 +149,7 @@
 		"desc": "Financial Services Company",
 		"startPrice": 244.15,
 		"vol": 0.3,
-		"driftType": "up"
+		"driftType": "none"
 	},
 	{
 		"name": "Grand Bank",
@@ -165,7 +165,7 @@
 		"desc": "Retail Company",
 		"startPrice": 67.18,
 		"vol": 0.5,
-		"driftType": "up"
+		"driftType": "none"
 	},
 	{
 		"name": "DealStop",
@@ -173,7 +173,7 @@
 		"desc": "Retail Company",
 		"startPrice": 45.04,
 		"vol": 0.3,
-		"driftType": "up"
+		"driftType": "none"
 	},
 	{
 		"name": "GamePlace",
@@ -189,7 +189,7 @@
 		"desc": "Coffeehouse Company",
 		"startPrice": 36.87,
 		"vol": 0.4,
-		"driftType": "up"
+		"driftType": "none"
 	},
 	{
 		"name": "Lumber Depot",
@@ -197,6 +197,6 @@
 		"desc": "Retail Company",
 		"startPrice": 24.80,
 		"vol": 0.6,
-		"driftType": "down"
+		"driftType": "none"
 	}
 ]
