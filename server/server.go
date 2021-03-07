@@ -308,7 +308,9 @@ func (s *Server) startRequests(){
 	router.HandleFunc("/getAllStockInfo", s.getAllStockInfoHandler)
 	router.HandleFunc("/getStockInfo", s.getStockInfoHandler)
 
-	router.HandleFunc("/getUserSummaries", s.getUserSummaries)
+	router.HandleFunc("/getUserSummaries", s.getUserSummariesHandler)
+	router.HandleFunc("/buy", s.buyHandler)
+	router.HandleFunc("/sell", s.sellHandler)
 	fmt.Printf("[SERVER] Starting http server on :3432\n")
     if err := http.ListenAndServe(":3432", router); err != nil {
         log.Fatal(err)

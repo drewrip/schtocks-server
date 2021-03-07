@@ -10,9 +10,15 @@ import(
 )
 
 type BuyOrder struct {
+	Username string `json:"Username"`
+	Ticker string `json:"Ticker"`
+	Amount int64 `json:"Amount"`
 }
 
 type SellOrder struct {
+	Username string `json:"Username"`
+	Ticker string `json:"Ticker"`
+	Amount int64 `json:"Amount"`
 }
 
 func (s *Server) getAllPricesHandler(w http.ResponseWriter, r *http.Request){
@@ -106,7 +112,7 @@ func (s *Server) getStockInfoHandler(w http.ResponseWriter, r *http.Request){
 	w.Write(payload)
 }
 
-func (s *Server) getUserSummaries(w http.ResponseWriter, r *http.Request){
+func (s *Server) getUserSummariesHandler(w http.ResponseWriter, r *http.Request){
 	w.Header().Set("Content-Type", "application/json")
 	
 	payload, err2 := json.Marshal(s.GetUserSummaries())
@@ -114,4 +120,36 @@ func (s *Server) getUserSummaries(w http.ResponseWriter, r *http.Request){
 
 	w.WriteHeader(http.StatusOK)
 	w.Write(payload)	
+}
+
+func (s *Server) buyHandler(w http.ResponseWriter, r *http.Request){
+	w.Header().Set("Content-Type", "application/json")
+
+	b, err := ioutil.ReadAll(r.Body)
+	check(err)
+
+	var order BuyOrder
+
+    err = json.Unmarshal(b, &order)
+	check(err)
+	
+	s.BuyStock(order.Username, order.Ticker, order.Amount)
+
+	w.WriteHeader(http.StatusOK)
+}
+
+func (s *Server) sellHandler(w http.ResponseWriter, r *http.Request){
+	w.Header().Set("Content-Type", "application/json")
+
+	b, err := ioutil.ReadAll(r.Body)
+	check(err)
+
+	var order SellOrder
+
+    err = json.Unmarshal(b, &order)
+	check(err)
+	
+	s.SellStock(order.Username, order.Ticker, order.Amount)
+
+	w.WriteHeader(http.StatusOK)
 }
