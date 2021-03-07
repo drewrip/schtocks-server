@@ -9,6 +9,11 @@ import(
 	"github.com/drewrip/schtocks-server/stocks"
 )
 
+type BuyOrder struct {
+}
+
+type SellOrder struct {
+}
 
 func (s *Server) getAllPricesHandler(w http.ResponseWriter, r *http.Request){
 	fmt.Println("[SERVER] HTTP Request to /getAllPrices")
@@ -99,4 +104,14 @@ func (s *Server) getStockInfoHandler(w http.ResponseWriter, r *http.Request){
 
 	w.WriteHeader(http.StatusOK)
 	w.Write(payload)
+}
+
+func (s *Server) getUserSummaries(w http.ResponseWriter, r *http.Request){
+	w.Header().Set("Content-Type", "application/json")
+	
+	payload, err2 := json.Marshal(s.GetUserSummaries())
+	check(err2)
+
+	w.WriteHeader(http.StatusOK)
+	w.Write(payload)	
 }

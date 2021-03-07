@@ -72,6 +72,44 @@ func (s *Server) GetStockPrices(st *stocks.Stock) []TimePricePair {
 	return pairs
 }
 
+
+func (s *Server) GetUserSummaries() map[string](map[string]int64) {
+	dump := make(map[string](map[string]int64))
+	getUserSummariesSQL := `SELECT * FROM market;`
+
+	rows, err := s.DB.Query(getUserSummariesSQL)
+	check(err)
+
+	var username string
+	var ticker string
+	var amount int64
+	var boughtPrice float64
+	var boughtTime int64
+	
+	for rows.Next() {
+		err = rows.Scan(&username, &ticker, &amount, &boughtPrice, &boughtTime)
+		if _, ok := dump[username]; !ok {
+			dump[username] = make(map[string]int64)
+		}
+		dump[username][ticker] = amount
+	}
+
+	getListOfUsersSQL := `SELECT username FROM users`
+
+	rows, err = s.DB.Query(getListOfUsersSQL)
+	check(err)
+
+	var nonActiveUser string
+
+	for rows.Next() {
+		rows.Scan(&nonActiveUser)
+		if _, ok := dump[nonActiveUser]; !ok {
+			dump[nonActiveUser] = make(map[string]int64)
+		}
+	}
+
+	return dump
+}
 func (s *Server) GetCurrentStockPrice(tr string) float64 {
 	getCurrentStockPriceSQL := fmt.Sprintf(`SELECT price FROM %s ORDER BY time DESC LIMIT 1`, tr)
 
@@ -216,7 +254,6 @@ func (s *Server) BuyStock(username string, ticker string, amount int64){
 	if s.GetUserBalance(username) < (price * float64(amount)) {
 		check(errors.New("user trying to spend more money than they have"))
 	}
-	fmt.Println(-1 * float64(amount) * price)
 	s.AddToUserBalance(username, -1 * float64(amount) * price)
 	s.AddToUserStockAmount(username, ticker, amount)
 }
@@ -264,10 +301,14 @@ func (s *Server) startStocks(){
 
 func (s *Server) startRequests(){
 	router := mux.NewRouter().StrictSlash(true)
+	
     router.HandleFunc("/getAllPrices", s.getAllPricesHandler)
     router.HandleFunc("/getPrice", s.getPriceHandler)
+	
 	router.HandleFunc("/getAllStockInfo", s.getAllStockInfoHandler)
 	router.HandleFunc("/getStockInfo", s.getStockInfoHandler)
+
+	router.HandleFunc("/getUserSummaries", s.getUserSummaries)
 	fmt.Printf("[SERVER] Starting http server on :3432\n")
     if err := http.ListenAndServe(":3432", router); err != nil {
         log.Fatal(err)
@@ -310,12 +351,12 @@ func (s *Server) startMarket(){
 	s.newMarketTable()
 	s.newUserTable()
 
-	time.Sleep(1 * time.Second)
+	time.Sleep(time.Second)
+
 	s.AddNewUser("Zak", 1000.0)
 	s.AddNewUser("Dhruv", 1000.0)
-	s.AddNewUser("Drew", 1000.0)
 	s.AddNewUser("Lohith", 1000.0)
-	
+	s.AddNewUser("Drew", 1000.0)
 }
 
 func (s *Server) Start() {
