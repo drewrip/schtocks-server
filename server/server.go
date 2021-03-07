@@ -110,6 +110,26 @@ func (s *Server) GetUserSummaries() map[string](map[string]int64) {
 
 	return dump
 }
+
+func (s *Server) GetUserBalances() map[string]float64 {
+	getUserBalances := `SELECT * FROM users;`
+
+	rows, err := s.DB.Query(getUserBalances)
+	check(err)
+
+	balances := make(map[string]float64)
+	
+	var username string
+	var money float64
+
+	for rows.Next() {
+		rows.Scan(&username, &money)
+		balances[username] = money
+	}
+
+	return balances
+}
+
 func (s *Server) GetCurrentStockPrice(tr string) float64 {
 	getCurrentStockPriceSQL := fmt.Sprintf(`SELECT price FROM %s ORDER BY time DESC LIMIT 1`, tr)
 
@@ -309,6 +329,7 @@ func (s *Server) startRequests(){
 	router.HandleFunc("/getStockInfo", s.getStockInfoHandler)
 
 	router.HandleFunc("/getUserSummaries", s.getUserSummariesHandler)
+	router.HandleFunc("/getUserBalances", s.getUserBalancesHandler)
 	router.HandleFunc("/buy", s.buyHandler)
 	router.HandleFunc("/sell", s.sellHandler)
 	fmt.Printf("[SERVER] Starting http server on :3432\n")
