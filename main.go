@@ -7,7 +7,7 @@ import(
 
 
 func main(){
-	server := server.NewServer(time.Second)
+	server := server.NewServer(2*time.Second)
 	defer server.CloseDB()
 	server.Start()
 }

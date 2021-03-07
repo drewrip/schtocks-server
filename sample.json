@@ -30,6 +30,173 @@
 		"startPrice": 456.90,
 		"vol": 0.2,
 		"driftType": "up"
+	},
+	{
+		"name": "MacroHard",
+		"ticker": "MHRD",
+		"desc": "Technology Company",
+		"startPrice": 252.37,
+		"vol": 0.7,
+		"driftType": "none"
+	},
+	{
+		"name": "FrontBook",
+		"ticker": "FRBK",
+		"desc": "Social Media Company",
+		"startPrice": 423.96,
+		"vol": 0.4,
+		"driftType": "down"
+	},
+	{
+		"name": "Chirper",
+		"ticker": "CHRP",
+		"desc": "Social Media Company",
+		"startPrice": 456.90,
+		"vol": 0.2,
+		"driftType": "up"
+	},
+	{
+		"name": "John and John",
+		"ticker": "JNJN",
+		"desc": "Medical Device Company",
+		"startPrice": 123.27,
+		"vol": 0.5,
+		"driftType": "none"
+	},
+	{
+		"name": "WebFilms",
+		"ticker": "WBFM",
+		"desc": "Streaming Service",
+		"startPrice": 70.82,
+		"vol": 0.6,
+		"driftType": "up"
+	},
+	{
+		"name": "Vinny's Italian Pizzaria",
+		"ticker": "VIPA",
+		"desc": "Restaurant Chain",
+		"startPrice": 12.96,
+		"vol": 0.8,
+		"driftType": "none"
+	},
+	{
+		"name": "Grandma's Cookies",
+		"ticker": "GMAC",
+		"desc": "Bakery",
+		"startPrice": 5.96,
+		"vol": 0.6,
+		"driftType": "up"
+	},
+	{
+		"name": "Fredrick and Sons",
+		"ticker": "FDAS",
+		"desc": "Construction Company",
+		"startPrice": 3.23,
+		"vol": 0.4,
+		"driftType": "down"
+	},
+	{
+		"name": "Ron's Burgers",
+		"ticker": "RNBG",
+		"desc": "Restaurant Chain",
+		"startPrice": 53.41,
+		"vol": 0.2,
+		"driftType": "none"
+	},
+	{
+		"name": "Plumbers R Us",
+		"ticker": "PBRS",
+		"desc": "Plumbing Company",
+		"startPrice": 14.67,
+		"vol": 0.5,
+		"driftType": "up"
+	},
+	{
+		"name": "Lens Studios",
+		"ticker": "LNST",
+		"desc": "Entertainment Company",
+		"startPrice": 82.33,
+		"vol": 0.7,
+		"driftType": "none"
+	},
+	{
+		"name": "Schwanda",
+		"ticker": "SCWA",
+		"desc": "Motor Company",
+		"startPrice": 34.92,
+		"vol": 0.3,
+		"driftType": "down"
+	},
+	{
+		"name": "Futugari",
+		"ticker": "FTGI",
+		"desc": "Luxury Car Company",
+		"startPrice": 56.48,
+		"vol": 0.9,
+		"driftType": "down"
+	},
+	{
+		"name": "Snips and Clips",
+		"ticker": "SNCL",
+		"desc": "Hair Salon Franchise",
+		"startPrice": 15.68,
+		"vol": 0.4,
+		"driftType": "none"
+	},
+	{
+		"name": "Eagle Bank",
+		"ticker": "EGBK",
+		"desc": "Financial Services Company",
+		"startPrice": 244.15,
+		"vol": 0.3,
+		"driftType": "up"
+	},
+	{
+		"name": "Grand Bank",
+		"ticker": "GDBK",
+		"desc": "Financial Services Company",
+		"startPrice": 198.32,
+		"vol": 0.4,
+		"driftType": "none"
+	},
+	{
+		"name": "QuickMart",
+		"ticker": "QKMT",
+		"desc": "Retail Company",
+		"startPrice": 67.18,
+		"vol": 0.5,
+		"driftType": "up"
+	},
+	{
+		"name": "DealStop",
+		"ticker": "DLSP",
+		"desc": "Retail Company",
+		"startPrice": 45.04,
+		"vol": 0.3,
+		"driftType": "up"
+	},
+	{
+		"name": "GamePlace",
+		"ticker": "GMEP",
+		"desc": "Electronics Retail Company",
+		"startPrice": 75.30,
+		"vol": 0.9,
+		"driftType": "none"
+	},
+	{
+		"name": "Caffeine Corner",
+		"ticker": "CAFC",
+		"desc": "Coffeehouse Company",
+		"startPrice": 36.87,
+		"vol": 0.4,
+		"driftType": "up"
+	},
+	{
+		"name": "Lumber Depot",
+		"ticker": "PJDP",
+		"desc": "Retail Company",
+		"startPrice": 24.80,
+		"vol": 0.6,
+		"driftType": "down"
 	}
-
 ]
